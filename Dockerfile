@@ -13,8 +13,12 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Копируем исходный код
-COPY . .
+# Копируем файлы зависимостей
+COPY go.mod go.sum ./
+
+# Копируем исходный код приложения
+COPY main.go ./
+
 
 # Компиляция приложения:
 # - CGO_ENABLED=0 — отключение CGO для получения статически слинкованного бинарника
@@ -24,7 +28,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 # -----------------------------
 # Stage 2: Финальный образ
 # -----------------------------
-FROM alpine:latest
+FROM alpine:3.18
 
 # Создаем группу и пользователя (непривилегированного) для запуска контейнера
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
