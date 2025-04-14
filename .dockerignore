@@ -4,3 +4,4 @@
 *.log
 tmp/
 docker-compose.yml
+Dockerfile
