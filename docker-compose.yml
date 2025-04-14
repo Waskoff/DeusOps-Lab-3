@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    environment:
+      - GREETING=Привет из Docker Compose!
+    container_name: multi_stage_app
